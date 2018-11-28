@@ -50,6 +50,7 @@ class ResourcesController < ApplicationController
     resource = Resource.find params[:id]
     if resource.approved?
       resource.inactive!
+      resource.remove_from_index!
       render status: :ok
     else
       render status: :precondition_failed

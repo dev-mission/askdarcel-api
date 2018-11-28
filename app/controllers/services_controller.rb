@@ -76,6 +76,7 @@ class ServicesController < ApplicationController
     service = Service.find params[:id]
     if service.approved?
       service.inactive!
+      service.remove_from_index!
       render status: :ok
     else
       render status: :precondition_failed
