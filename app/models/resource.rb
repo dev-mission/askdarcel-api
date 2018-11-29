@@ -27,6 +27,10 @@ class Resource < ActiveRecord::Base
     self.status = :pending unless status
   end
 
+  after_save do
+    Algolia::ReindexJob.perform_async(Resource, id)
+  end
+
   if Rails.configuration.x.algolia.enabled
     # Note: We can't use the per_environment option because both our production
     # and staging servers use the same RAILS_ENV.

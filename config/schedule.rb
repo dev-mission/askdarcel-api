@@ -23,5 +23,5 @@
 
 # Reindex all records in Algolia every day.
 every 1.day, at: '7am' do
-  runner 'AlgoliaReindexJob.perform_async'
+  runner 'Algolia::ReindexAllJob.perform_async'
 end
