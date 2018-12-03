@@ -76,7 +76,7 @@ class ResourcesController < ApplicationController
   def remove_from_algolia(resource)
     resource.remove_from_index!
   rescue StandardError
-    puts 'failed to remove resource ' + resource.id + ' from algolia index'
+    puts 'failed to remove resource ' + resource.id.to_s + ' from algolia index'
   end
 
   def fix_lat_and_long(address)

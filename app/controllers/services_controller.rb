@@ -92,7 +92,7 @@ class ServicesController < ApplicationController
   def remove_from_algolia(service)
     service.remove_from_index!
   rescue StandardError
-    puts 'failed to remove rservice ' + service.id + ' from algolia index'
+    puts 'failed to remove rservice ' + service.id.to_s + ' from algolia index'
   end
 
   def services
