@@ -50,7 +50,7 @@ class ResourcesController < ApplicationController
     resource = Resource.find params[:id]
     if resource.approved?
       resource.inactive!
-      resource.remove_from_index!
+      remove_from_algolia(resource)
       render status: :ok
     else
       render status: :precondition_failed
@@ -71,6 +71,12 @@ class ResourcesController < ApplicationController
       r.status = :approved
       fix_lat_and_long(r.address)
     end
+  end
+
+  def remove_from_algolia(resource)
+    resource.remove_from_index!
+  rescue StandardError
+    puts 'failed to remove resource ' + resource.id + ' from algolia index'
   end
 
   def fix_lat_and_long(address)
