@@ -124,3 +124,18 @@ After cloning the repository and `cd`ing into the workspace:
   - `rails s -b 0.0.0.0`
 8. Do NOT do sudo install -rails
 
+
+### Setting up Algolia
+
+1. Sign up for a trial (or free Community plan) account at [Algolia](https://www.algolia.com/)
+
+2. Create a new Application, then create a new Index. Give the Index a name in the following format:
+  - `ENTER_YOUR_GITHUB_USERNAME_HERE_services_search`
+
+3. Add the following to your .env file, copying from the API keys section in the Algolia Dashboard:
+  - `ALGOLIA_INDEX_PREFIX=ENTER_YOUR_GITHUB_USERNAME_HERE`
+  - `ALGOLIA_APPLICATION_ID=COPY_FROM_ALGOLIA_DASHBOARD`
+  - `ALGOLIA_API_KEY=COPY_FROM_ALGOLIA_DASHBOARD_ADMIN_API_KEY`
+
+4. Run the Algolia indexing task:
+  - `rake algolia:reindex`
