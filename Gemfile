@@ -40,6 +40,8 @@ gem 'daemons'
 gem 'delayed_job_active_record'
 gem 'whenever', require: false
 
+gem 'awesome_nested_set'
+
 group :production do
   gem 'activerecord-nulldb-adapter'
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190106233415) do
+ActiveRecord::Schema.define(version: 20190210184219) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -183,6 +183,27 @@ ActiveRecord::Schema.define(version: 20190106233415) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "needs", force: :cascade do |t|
+    t.string   "name",                       null: false
+    t.integer  "parent_id"
+    t.integer  "lft",                        null: false
+    t.integer  "rgt",                        null: false
+    t.integer  "depth",          default: 0, null: false
+    t.integer  "children_count", default: 0, null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.index ["lft"], name: "index_needs_on_lft", using: :btree
+    t.index ["parent_id"], name: "index_needs_on_parent_id", using: :btree
+    t.index ["rgt"], name: "index_needs_on_rgt", using: :btree
+  end
+
+  create_table "needs_resources", id: false, force: :cascade do |t|
+    t.integer "need_id",     null: false
+    t.integer "resource_id", null: false
+    t.index ["need_id", "resource_id"], name: "index_needs_resources_on_need_id_and_resource_id", unique: true, using: :btree
+    t.index ["resource_id"], name: "index_needs_resources_on_resource_id", using: :btree
+  end
+
   create_table "notes", force: :cascade do |t|
     t.text     "note"
     t.integer  "resource_id"
@@ -322,6 +343,9 @@ ActiveRecord::Schema.define(version: 20190106233415) do
   add_foreign_key "contacts", "resources"
   add_foreign_key "contacts", "services"
   add_foreign_key "field_changes", "change_requests"
+  add_foreign_key "needs", "needs", column: "parent_id"
+  add_foreign_key "needs_resources", "needs"
+  add_foreign_key "needs_resources", "resources"
   add_foreign_key "notes", "resources"
   add_foreign_key "notes", "services"
   add_foreign_key "phones", "contacts"
