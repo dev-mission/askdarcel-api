@@ -40,6 +40,7 @@ Rails.application.routes.draw do
       get :count
     end
   end
+  resources :needs
   resources :notes do
     resources :change_requests, only: :create
   end
