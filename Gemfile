@@ -42,6 +42,9 @@ gem 'whenever', require: false
 
 gem 'awesome_nested_set'
 
+# Need FactoryBot in production to run import in production
+gem 'factory_bot_rails'
+
 group :production do
   gem 'activerecord-nulldb-adapter'
 end
@@ -51,7 +54,6 @@ gem 'rspec-rails'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a
   # debugger console
-  gem 'factory_bot_rails'
   gem 'byebug'
   gem 'bullet'
   gem 'dotenv-rails'
