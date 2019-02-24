@@ -3,9 +3,10 @@
 class ResourcesController < ApplicationController
   def index
     # byebug
-    category_id = params.require :category_id
+    category_id = params[:category_id]
+    need_id = params[:need_id]
 
-    relation = get_all_resources(category_id)
+    relation = get_all_resources(category_id, need_id)
     render json: ResourcesPresenter.present(relation)
   end
 
@@ -56,8 +57,14 @@ class ResourcesController < ApplicationController
 
   private
 
-  def get_all_resources(category_id)
-    relation = if category_id == "all"
+  def get_all_resources(category_id, need_id)
+    relation = if need_id
+                resources
+                  .joins(:address, :needs)
+                  .where({needs: { id: need_id }})
+                  .where(status: Resource.statuses[:approved])
+                  .order(sort_order)
+               elsif category_id == "all"
                  resources.where(status: Resource.statuses[:approved])
                else
                  # TODO: This can be simplified once we remove categories from resources
