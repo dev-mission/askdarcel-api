@@ -33,7 +33,7 @@ module AskdarcelApi
     config.middleware.insert_before 0, Rack::Cors do
       allow do
         origins 'devmission-askdarcel-web.herokuapp.com', 'localhost:8080', 'localhost:3030'
-        resource '*', headers: :any, methods: %i[get post options], expose: ['Access-Token', 'Client', 'Uid']
+        resource '*', headers: :any, methods: %i[get post options], expose: ['Access-Token', 'Client', 'Uid'], credentials: true
       end
     end
     config.after_initialize do
