@@ -1,7 +1,7 @@
 class NeedsController < ApplicationController
   # returns just the top-level Needs
   def index
-    @needs = Need.roots
+    @needs = Need.order(:lft)
     render json: NeedPresenter.present(@needs)
   end
 
