@@ -26,6 +26,10 @@ module AskdarcelApi
 
     config.x.google.api_key = ENV['GOOGLE_API_KEY']
 
+    config.middleware.insert_before(Rack::Runtime, Rack::Rewrite) do
+      rewrite   %r{/api(.*)}, '$1'
+    end
+
     config.middleware.insert_before 0, Rack::Cors do
       allow do
         origins '*'

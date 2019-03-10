@@ -64,3 +64,5 @@ end
 group :test do
   gem 'rspec-collection_matchers'
 end
+
+gem "rack-rewrite", "~> 1.5"
